@@ -1,0 +1,24 @@
+[package]
+name = "img-scale-axum"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+axum = { version = "0.5.9", features = ["multipart"] }
+bytes = "1.1.0"
+image = { version = "0.24.1", default-features = false, features = ["jpeg"] }
+tokio = { version = "1.17.0", features = ["full"]}
+tracing = "0.1"
+tracing-subscriber =  { version = "0.3", features = ["env-filter"] }
+tower = { version = "0.4.13", features = ["limit"] }
+tower-http = { version = "0.3.4", features = ["trace"] }
+
+[target.'cfg(not(target_env = "msvc"))'.dependencies]
+tikv-jemallocator = "0.5"
+
+[profile.release]
+lto = true
+opt-level = 3
+strip = true
